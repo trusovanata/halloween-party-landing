@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="3219.58" height="3193.7" viewBox="0 0 3219.58 3193.7" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path id="decor/glow-06" d="M3219.58 1596.85C3219.58 2478.77 2498.85 3193.7 1609.79 3193.7C720.728 3193.7 0 2478.77 0 1596.85C0 714.935 720.728 0 1609.79 0C2498.85 0 3219.58 714.935 3219.58 1596.85Z" fill="url(#paint0_radial_0_9)"/>
+<defs>
+<radialGradient id="paint0_radial_0_9" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1417.21 1129.24) rotate(90) scale(1596.85 1609.79)">
+<stop stop-color="#067394" stop-opacity="0.8"/>
+<stop offset="0.591346" stop-color="#261D16" stop-opacity="0.0653846"/>
+<stop offset="1" stop-color="#29150B" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
