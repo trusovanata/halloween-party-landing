@@ -1015,6 +1015,109 @@ footer {
   }
 }
 
+@media (max-width: 767px) {
+  .magic {
+    display: flex;
+    padding-top: 48px;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  .when {
+    order: 1;
+  }
+
+  .magic__title {
+    order: 2;
+    font-size: clamp(42px, 11vw, 56px);
+  }
+
+  .rave-player {
+    width: 94%;
+    order: 3;
+    align-self: flex-start;
+  }
+
+  .after-dark {
+    order: 4;
+    align-self: flex-end;
+    font-size: clamp(38px, 12vw, 48px);
+  }
+
+  .magic__photo {
+    width: 46vw;
+    max-width: 180px;
+    margin: -8px 10px 8px 0;
+    order: 5;
+    align-self: flex-end;
+  }
+
+  .decks {
+    padding: 44px 0 96px;
+    order: 6;
+  }
+
+  .decks h2 {
+    font-size: clamp(38px, 12vw, 48px);
+  }
+
+  .dress-copy h2 {
+    font-size: clamp(50px, 15vw, 62px);
+  }
+
+  .dress-copy h3 {
+    font-size: clamp(42px, 12vw, 52px);
+  }
+
+  .pose h2 {
+    font-size: clamp(48px, 14vw, 58px);
+  }
+
+  .dance__title {
+    font-size: clamp(58px, 18vw, 70px);
+  }
+
+  .countdown {
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+
+  .countdown__units {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .countdown__unit strong {
+    font-size: clamp(30px, 10vw, 40px);
+  }
+
+  .countdown__unit span {
+    margin-top: 6px;
+    font-size: 10px;
+  }
+
+  .venue h2,
+  .rsvp h2 {
+    font-size: clamp(52px, 16vw, 64px);
+  }
+
+  .venue__info strong {
+    font-size: 25px;
+  }
+
+  .venue__address {
+    font-size: 16px;
+  }
+
+  .venue__map {
+    height: 220px;
+  }
+
+  .rsvp__badge {
+    width: 156px;
+  }
+}
+
 @media (min-width: 768px) {
   :root {
     --content: calc(100vw - 96px);
@@ -1043,21 +1146,6 @@ footer {
 
   .hero__video-frame {
     width: min(72vw, 560px);
-  }
-
-  .hero__title span,
-  .hero__title strong,
-  .display-title span,
-  .when h2,
-  .after-dark,
-  .decks h2,
-  .dress-copy h2,
-  .dress-copy h3,
-  .pose h2,
-  .dance__title,
-  .venue h2,
-  .rsvp h2 {
-    white-space: nowrap;
   }
 
   .magic {
@@ -1115,6 +1203,75 @@ footer {
   }
 }
 
+@media (min-width: 768px) and (max-width: 1199px) {
+  .magic {
+    gap: 54px 42px;
+  }
+
+  .magic__photo {
+    width: min(32vw, 280px);
+    grid-row: 1;
+  }
+
+  .when {
+    grid-column: 1;
+  }
+
+  .magic__title {
+    grid-row: 2;
+    font-size: clamp(56px, 8vw, 76px);
+  }
+
+  .rave-player {
+    width: 96%;
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .after-dark {
+    grid-column: 2;
+    grid-row: 3;
+    font-size: clamp(44px, 6vw, 60px);
+  }
+
+  .decks {
+    grid-row: 4;
+  }
+
+  .decks h2 {
+    max-width: 760px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: clamp(42px, 6.2vw, 58px);
+  }
+
+  .dress-copy h2 {
+    font-size: clamp(58px, 9vw, 82px);
+  }
+
+  .spider__small {
+    top: 220px;
+    right: -20px;
+    width: min(32vw, 280px);
+  }
+
+  .dress-copy h3 {
+    font-size: clamp(48px, 7vw, 68px);
+  }
+
+  .pose h2 {
+    font-size: clamp(48px, 7vw, 62px);
+  }
+
+  .dance__title {
+    font-size: clamp(62px, 8vw, 78px);
+  }
+
+  .venue h2 {
+    font-size: clamp(54px, 7vw, 66px);
+  }
+}
+
 @media (min-width: 1200px) {
   :root {
     --content: 87.5vw;
@@ -1157,6 +1314,21 @@ footer {
     padding: 1.042vw 0.75vw;
     font-size: 0.833vw;
     line-height: 1.25vw;
+  }
+
+  .hero__title span,
+  .hero__title strong,
+  .display-title span,
+  .when h2,
+  .after-dark,
+  .decks h2,
+  .dress-copy h2,
+  .dress-copy h3,
+  .pose h2,
+  .dance__title,
+  .venue h2,
+  .rsvp h2 {
+    white-space: nowrap;
   }
 
   .eyebrow {
