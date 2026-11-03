@@ -304,6 +304,23 @@ a:focus-visible {
 .hero__pumpkin-motion {
   position: relative;
   overflow: hidden;
+  background: #000;
+  /* Маска и фон — на обёртке (обычный div), не на самом <video>.
+     У replaced-элементов (video/img) браузеры не всегда применяют
+     mask к собственному background одинаково — отсюда был виден
+     полупрозрачный квадрат по контуру кадра вместо мягкого растворения
+     в фон страницы. На div с overflow:hidden маска работает надёжно
+     и для фона, и для содержимого разом. */
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 85% at 50% 50%,
+    #000 70%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 85% at 50% 50%,
+    #000 70%,
+    transparent 100%
+  );
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -312,25 +329,6 @@ a:focus-visible {
   display: block;
   width: 100%;
   height: 100%;
-  background: #000;
-  -webkit-mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
-  /* Любой blend-mode (screen и lighten оба) на миг показывает белую
-     вспышку, пока видео ещё не отрисовало первый кадр (элемент
-     <video> без постера может недолго красить себя в белый — именно
-     это и есть «белая подложка», а не сам blend-mode в установившемся
-     состоянии). normal + свой чёрный фон убирают эту вспышку совсем:
-     маска уже сама скрывает прямоугольный край в прозрачность,
-     blend тут был не обязателен. */
-  mix-blend-mode: normal;
-  mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
   object-fit: cover;
   object-position: center;
 }
@@ -503,24 +501,26 @@ footer {
   max-width: 520px;
   aspect-ratio: 672 / 384;
   overflow: hidden;
+  background: #000;
+  /* Маска на обёртке, не на <video> — см. комментарий у
+     .hero__pumpkin-motion: на replaced-элементах mask не всегда
+     ровно накрывает и фон, и содержимое, оставляя видимый квадрат. */
+  -webkit-mask-image: radial-gradient(
+    ellipse 85% 85% at 50% 50%,
+    #000 70%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 85% 85% at 50% 50%,
+    #000 70%,
+    transparent 100%
+  );
 }
 
 .rave-player video {
   display: block;
   width: 100%;
   height: 100%;
-  background: #000;
-  -webkit-mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
-  mix-blend-mode: normal;
-  mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
   object-fit: cover;
 }
 
