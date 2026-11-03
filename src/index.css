@@ -90,6 +90,10 @@ html {
   overflow: hidden;
   background: #000;
   isolation: isolate;
+  /* Шапка теперь fixed (вынута из потока) — компенсируем её высотой
+     отступ сверху, иначе герой полезет под неё. Значения совпадают
+     с .header height на тех же брейкпоинтах. */
+  padding-top: 76px;
 }
 
 .ambient-glows {
@@ -143,16 +147,30 @@ html {
 }
 
 .header {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 48px);
+  box-sizing: border-box;
+  width: 100%;
   height: 76px;
-  margin: 0 24px;
+  margin: 0;
+  padding: 0 24px;
   font-family: "JetBrains Mono:Regular", monospace;
   text-transform: uppercase;
+  /* Матовое стекло — шапка теперь fixed и всегда поверх контента,
+     без подложки текст был бы нечитаем на светлых кадрах видео/фото.
+     Фон — на всю ширину экрана (width:100%), а отступ контента —
+     через padding, а не через узкий width: иначе стекло обрывалось
+     бы жёстким швом посреди широкого экрана вместо честной полосы
+     во всю ширину. */
+  background: rgba(10, 8, 6, 0.45);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .logo {
@@ -299,7 +317,11 @@ a:focus-visible {
     #000 70%,
     transparent 100%
   );
-  mix-blend-mode: screen;
+  /* screen высветляет чёрный фон видео (он не идеально #000 из-за шума
+     кодека) в серо-белую дымку по всему кадру — отсюда «белая
+     подложка». lighten берёт по каналам максимум с фоном: тёмное
+     остаётся тёмным, светится только то, что реально ярче фона. */
+  mix-blend-mode: lighten;
   mask-image: radial-gradient(
     ellipse 85% 85% at 50% 50%,
     #000 70%,
@@ -484,7 +506,7 @@ footer {
     #000 70%,
     transparent 100%
   );
-  mix-blend-mode: screen;
+  mix-blend-mode: lighten;
   mask-image: radial-gradient(
     ellipse 85% 85% at 50% 50%,
     #000 70%,
@@ -622,8 +644,15 @@ footer {
   z-index: 3;
   top: 395px;
   right: -30px;
-  width: 55vw;
-  max-width: 330px;
+  /* .spider__media — фиксированные 570px высоты, а top здесь — тоже
+     фиксированный px. На узких экранах 55vw (ширина) давала картинку
+     выше, чем остаток фото под top:395px, — низ рамки вылезал на
+     текст "Masks Encouraged" ниже. auto + max-width/max-height вместе
+     поджимают картинку по тому измерению, которое теснее. */
+  width: auto;
+  height: auto;
+  max-width: min(55vw, 330px);
+  max-height: 160px;
   transform: rotate(19.3deg);
 }
 
@@ -1095,7 +1124,18 @@ footer {
   .header {
     width: var(--content);
     height: 5.677vw;
-    margin: 0 var(--side);
+    margin: 0;
+    /* Шапка — fixed, позиционируется от вьюпорта, а не от .site-shell.
+       На экранах шире 1920 сам .site-shell центрируется (max-width:1920
+       + margin:auto), а шапка без этой поправки просто прилипала к
+       левому краю физического экрана. Эта формула держит тот же отступ
+       --side, но от края виртуальной страницы 1920, а не от края
+       реального, более широкого окна. */
+    left: calc(max(0px, (100vw - 1920px) / 2) + var(--side));
+  }
+
+  .site-shell {
+    padding-top: 5.677vw;
   }
 
   .logo {

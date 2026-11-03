@@ -104,7 +104,7 @@ export default function App() {
     null,
   )
   const [isAudioPlaying, setIsAudioPlaying] = useState(false)
-  const [isRavePlaying, setIsRavePlaying] = useState(false)
+  const [isRavePlaying, setIsRavePlaying] = useState(true)
   const [submitted, setSubmitted] = useState(false)
   const [countdown, setCountdown] = useState(getCountdown)
 
@@ -278,7 +278,8 @@ export default function App() {
         preload="auto"
         ref={backgroundAudio}
       >
-        <source src="/audio/halloween-loop.m4a" type="audio/mp4" />
+        <source src="/audio/hellowin-theme.opus" type="audio/ogg" />
+        <source src="/audio/hellowin-theme.mp3" type="audio/mpeg" />
       </audio>
       <motion.button
         aria-label={
@@ -442,6 +443,7 @@ export default function App() {
         >
           <video
             ref={raveVideo}
+            autoPlay
             loop
             muted
             playsInline
