@@ -386,7 +386,11 @@ a:focus-visible {
   position: relative;
   z-index: 7;
   display: flex;
-  margin-top: -46px;
+  /* Было -46px — ровно настолько заголовок наезжал на "Odesa" выше.
+     Отрицательный отступ был подобран под другую (десктопную)
+     раскладку меты, в мобильной колонке он в чистом виде перекрывал
+     текст. */
+  margin-top: 24px;
   flex-direction: column;
   font-family: "TypoGraphica:Regular", sans-serif;
   font-weight: 400;
