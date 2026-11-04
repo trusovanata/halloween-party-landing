@@ -278,7 +278,12 @@ a:focus-visible {
 .hero {
   position: relative;
   display: flex;
-  min-height: 780px;
+  /* 100dvh — кнопка в подвале первого экрана, "как в приложении":
+     держит высоту первого экрана, даже если контента внутри набежит
+     меньше, чем 780px. dvh, а не vh — на мобильных vh включает адресную
+     строку браузера и прыгает при скролле, dvh считает реальную
+     видимую высоту. */
+  min-height: max(780px, 100dvh);
   padding: 30px 24px 70px;
   flex-direction: column;
   align-items: center;
@@ -413,8 +418,15 @@ a:focus-visible {
 }
 
 .button--hero {
-  position: relative;
+  /* sticky, а не просто margin-top:auto — если контент хero сам
+     длиннее экрана (тыква + вся мета + заголовок), auto-отступу
+     некуда толкать кнопку. sticky держит её у нижнего края ВИДИМОЙ
+     области, пока сам .hero ещё на экране — то есть именно "кнопка
+     первого экрана всегда внизу", как в приложении, независимо от
+     того, сколько контента над ней. */
+  position: sticky;
   z-index: 7;
+  bottom: 16px;
   width: min(100%, 360px);
   margin-top: 34px;
 }
@@ -695,7 +707,9 @@ footer {
 
 .pose {
   width: calc(100% - 48px);
-  margin: 0 24px 90px;
+  /* Было 90px снизу — вместе с padding-top:80px у .dance давало
+     заметный чёрный провал перед "Dance More". */
+  margin: 0 24px 36px;
   text-align: right;
 }
 
@@ -724,7 +738,8 @@ footer {
 }
 
 .countdown {
-  padding: 60px 24px 130px;
+  /* Было 130px снизу — заметный пустой провал перед "Find the Coven". */
+  padding: 60px 24px 60px;
   text-align: center;
 }
 
@@ -767,7 +782,9 @@ footer {
 
 .venue {
   display: grid;
-  padding: 60px 24px 120px;
+  /* Было 120px снизу — вместе с 90px сверху у .rsvp давало ~210px
+     пустоты перед "Claim your seat". */
+  padding: 60px 24px 60px;
   gap: 32px;
 }
 
@@ -828,7 +845,7 @@ footer {
 .rsvp {
   position: relative;
   min-height: 1030px;
-  padding: 90px 24px 110px;
+  padding: 48px 24px 110px;
   background: url("/assets/227b9.png") center / cover no-repeat;
 }
 
