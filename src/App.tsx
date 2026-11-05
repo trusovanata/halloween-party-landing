@@ -694,7 +694,10 @@ export default function App() {
           </span>
         </div>
       </div>
-      <footer>Halloween · Julia · October 31 · 17:00</footer>
+      <footer>
+        <span className="footer__group">Halloween · Julia</span>{" "}
+        <span className="footer__group">October 31 · 17:00</span>
+      </footer>
     </motion.main>
   )
 }

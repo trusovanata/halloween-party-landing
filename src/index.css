@@ -751,9 +751,16 @@ footer {
 }
 
 .dance__title {
-  position: relative;
+  /* Раньше стоял в потоке ПЕРЕД фото и всегда попадал на пустой чёрный
+     фон. Теперь лежит поверх .dance__media, в тёмной нижней части
+     кадра (там же, где его прячет сам снимок на ≥1200px) — текст
+     читается на дыму, а не висит отдельно над карточкой. */
+  position: absolute;
   z-index: 7;
-  margin: 0 24px -26px;
+  top: 692px;
+  right: 24px;
+  left: 24px;
+  margin: 0;
   font-size: 74px;
   line-height: 1;
   text-align: center;
@@ -1056,6 +1063,12 @@ footer {
   font-size: 19px;
   line-height: 1.45;
   letter-spacing: 0.02em;
+}
+
+/* Если строка целиком не помещается, переносить ровно между "что"
+   и "когда" — а не посреди одной из групп. */
+.footer__group {
+  white-space: nowrap;
 }
 
 @keyframes marquee {
@@ -1647,6 +1660,7 @@ footer {
   .dance__title {
     position: absolute;
     top: 13.177vw;
+    right: auto;
     left: 28.646vw;
     margin: 0;
     font-size: 6.667vw;
