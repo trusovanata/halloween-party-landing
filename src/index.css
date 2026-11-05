@@ -647,7 +647,12 @@ footer {
 
 .spider {
   position: relative;
-  min-height: 980px;
+  /* Было 980px фиксированной высоты — на мобильной ширине реальный
+     контент (фото + текст) короче, и после "Just photos" оставался
+     чёрный провал до следующей секции. Та же причина, по которой
+     ниже уже стоит min-height:auto для планшета — просто не было
+     перенесено и на базовую (мобильную) версию. */
+  min-height: auto;
 }
 
 .spider__media,
@@ -1020,13 +1025,16 @@ footer {
 
 .marquee {
   display: flex;
-  height: 84px;
+  /* Было 84px при line-height:44px — вокруг строки текста оставалось
+     слишком много пустого места, полоса выглядела непропорционально
+     высокой. */
+  height: 52px;
   align-items: center;
   overflow: hidden;
   background: #950003;
   font-family: "JetBrains Mono:Regular", monospace;
   font-size: 18px;
-  line-height: 44px;
+  line-height: 1.4;
   letter-spacing: 0.02em;
 }
 
@@ -1833,7 +1841,7 @@ footer {
 
   .marquee {
     font-size: 1.667vw;
-    line-height: 4.375vw;
+    line-height: 1.4;
   }
 
   footer {
