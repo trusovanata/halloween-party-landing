@@ -85,6 +85,7 @@ function Fade({ direction = "top" }: { direction?: "top" | "bottom" }) {
 
 export default function App() {
   const backgroundAudio = useRef<HTMLAudioElement>(null)
+  const heroSection = useRef<HTMLElement>(null)
   const pumpkinMotion = useRef<HTMLDivElement>(null)
   const pumpkinVideo = useRef<HTMLVideoElement>(null)
   const raveVideo = useRef<HTMLVideoElement>(null)
@@ -104,6 +105,7 @@ export default function App() {
   const [pumpkinVideoError, setPumpkinVideoError] = useState<string | null>(
     null,
   )
+  const [heroInView, setHeroInView] = useState(true)
   const [isAudioPlaying, setIsAudioPlaying] = useState(false)
   const [isRavePlaying, setIsRavePlaying] = useState(true)
   const [submitted, setSubmitted] = useState(false)
@@ -116,6 +118,18 @@ export default function App() {
 
   useEffect(() => {
     if (backgroundAudio.current) backgroundAudio.current.volume = 0.32
+  }, [])
+
+  useEffect(() => {
+    const section = heroSection.current
+    if (!section) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0 },
+    )
+    observer.observe(section)
+    return () => observer.disconnect()
   }, [])
 
   const toggleSiteAudio = async () => {
@@ -289,7 +303,7 @@ export default function App() {
             : "Turn background sound on"
         }
         aria-pressed={isAudioPlaying}
-        className="sound-toggle"
+        className={`sound-toggle ${heroInView ? "is-hero-visible" : ""}`}
         onClick={() => void toggleSiteAudio()}
         type="button"
         whileHover={
@@ -324,7 +338,12 @@ export default function App() {
         <Button className="button--small">Claim your seat</Button>
       </header>
 
-      <motion.section className="hero" id="top" variants={heroStagger}>
+      <motion.section
+        className="hero"
+        id="top"
+        ref={heroSection}
+        variants={heroStagger}
+      >
         <motion.div className="hero__video-frame" variants={revealItem}>
           <motion.div
             animate={
@@ -422,7 +441,11 @@ export default function App() {
           <span>A Birthday</span>
           <strong>Gone Dark</strong>
         </motion.div>
-        <Button className="button--hero">Claim your seat</Button>
+        <Button
+          className={`button--hero ${heroInView ? "" : "is-hero-hidden"}`}
+        >
+          Claim your seat
+        </Button>
       </motion.section>
 
       <section className="magic" id="when">

@@ -232,6 +232,7 @@ a:focus-visible {
   z-index: 30;
   right: 18px;
   bottom: 18px;
+  transition: bottom 200ms ease;
   display: inline-flex;
   min-height: 44px;
   padding: 10px 14px;
@@ -416,17 +417,39 @@ a:focus-visible {
 }
 
 .button--hero {
-  /* sticky, а не просто margin-top:auto — если контент хero сам
-     длиннее экрана (тыква + вся мета + заголовок), auto-отступу
-     некуда толкать кнопку. sticky держит её у нижнего края ВИДИМОЙ
-     области, пока сам .hero ещё на экране — то есть именно "кнопка
-     первого экрана всегда внизу", как в приложении, независимо от
-     того, сколько контента над ней. */
-  position: sticky;
-  z-index: 7;
+  /* Раньше было position:sticky, но у .site-shell есть overflow:hidden
+     (нужен для обрезки свечений и повёрнутых картинок) — а любой
+     предок с overflow != visible ломает sticky, он просто перестаёт
+     прилипать. Поэтому теперь честный fixed + JS: кнопка висит у
+     нижнего края ЭКРАНА, пока секция .hero во вьюпорте (IntersectionObserver
+     ставит/снимает .is-hero-hidden), и исчезает, как только прокрутили
+     дальше — ровно "кнопка первого экрана всегда внизу, как в приложении". */
+  position: fixed;
+  z-index: 20;
+  right: 16px;
   bottom: 16px;
-  width: min(100%, 360px);
-  margin-top: 34px;
+  left: 16px;
+  width: auto;
+  max-width: 360px;
+  margin: 0 auto;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+@media (max-width: 1199px) {
+  .button--hero.is-hero-hidden {
+    /* !important — Framer Motion сам прописывает opacity/transform
+       инлайном (анимация появления кнопки), обычный класс это не
+       перебьёт. */
+    opacity: 0 !important;
+    transform: translateY(12px) !important;
+    pointer-events: none;
+  }
+
+  /* Чтобы переключатель звука не перекрывался фикс-кнопкой
+     "Claim your seat", пока виден первый экран. */
+  .sound-toggle.is-hero-visible {
+    bottom: 82px;
+  }
 }
 
 .magic {
@@ -1056,24 +1079,24 @@ footer {
     font-size: clamp(42px, 11vw, 56px);
   }
 
-  .rave-player {
-    width: 94%;
-    order: 3;
-    align-self: flex-start;
-  }
-
-  .after-dark {
-    order: 4;
-    align-self: flex-end;
-    font-size: clamp(38px, 12vw, 48px);
-  }
-
   .magic__photo {
     width: 46vw;
     max-width: 180px;
     margin: -8px 10px 8px 0;
+    order: 3;
+    align-self: flex-end;
+  }
+
+  .rave-player {
+    width: 94%;
+    order: 4;
+    align-self: flex-start;
+  }
+
+  .after-dark {
     order: 5;
     align-self: flex-end;
+    font-size: clamp(38px, 12vw, 48px);
   }
 
   .decks {
@@ -1426,7 +1449,7 @@ footer {
 
   .hero__title span {
     position: absolute;
-    top: 25.104vw;
+    top: 21.5vw;
     left: var(--side);
     font-size: 5vw;
     line-height: 1.4;
@@ -1435,7 +1458,7 @@ footer {
 
   .hero__title strong {
     position: absolute;
-    top: 30.99vw;
+    top: 27.4vw;
     left: var(--side);
     font-size: 14.479vw;
     line-height: 1.4;
@@ -1445,12 +1468,12 @@ footer {
 
   .button--hero {
     position: absolute;
-    top: 44.635vw;
-    left: 40.625vw;
-    width: 18.75vw;
-    min-height: 4.896vw;
+    top: 41vw;
+    left: 43.5vw;
+    width: 13vw;
+    min-height: 3.75vw;
     margin: 0;
-    font-size: 1.25vw;
+    font-size: 1.05vw;
   }
 
   .magic {
