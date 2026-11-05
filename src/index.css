@@ -375,13 +375,34 @@ a:focus-visible {
   text-align: left;
 }
 
-.hero__date {
-  margin-top: 18px;
-}
-
+/* Было по три отдельных строки друг под другом с собственными
+   margin-top — теперь это один флекс-ряд (.hero__meta), а зазоры
+   между датой/кафе/городом дают символы-разделители ниже. На
+   ≥1200px каждая из них всё равно снимается в своё абсолютное
+   место, margin там уже явно обнулён отдельным правилом. */
+.hero__date,
 .hero__venue,
 .hero__city {
-  margin-top: 5px;
+  margin-top: 0;
+}
+
+@media (max-width: 1199px) {
+  /* На ≥1200px каждая строка метаданных снова встаёт в своё
+     абсолютное место в композиции — там ряд и разделители не нужны. */
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .hero__meta .hero__venue::before,
+  .hero__meta .hero__city::before {
+    content: "·";
+    margin: 0 8px;
+    opacity: 0.6;
+  }
 }
 
 .hero__title {
@@ -659,6 +680,13 @@ footer {
 .dance__media {
   position: relative;
   height: 570px;
+}
+
+.spider__media {
+  /* Исходное фото паука широкое (1344x768) — в узкий высокий блок
+     object-fit:cover зумил так сильно, что от паука оставалась узкая
+     полоса с неестественно растянутыми лапами. Пониже — кроп мягче. */
+  height: 430px;
 }
 
 .spider__media > img,
@@ -1108,16 +1136,16 @@ footer {
     align-self: flex-end;
   }
 
-  .rave-player {
-    width: 94%;
-    order: 4;
-    align-self: flex-start;
-  }
-
   .after-dark {
-    order: 5;
+    order: 4;
     align-self: flex-end;
     font-size: clamp(38px, 12vw, 48px);
+  }
+
+  .rave-player {
+    width: 94%;
+    order: 5;
+    align-self: flex-start;
   }
 
   .decks {

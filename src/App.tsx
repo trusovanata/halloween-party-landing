@@ -428,15 +428,17 @@ export default function App() {
         <motion.p className="eyebrow hero__eyebrow" variants={revealItem}>
           Julia’s Halloween Birthday
         </motion.p>
-        <motion.p className="meta hero__date" variants={revealItem}>
-          Oct 31 · 17:00
-        </motion.p>
-        <motion.p className="meta hero__venue" variants={revealItem}>
-          Lesok Café
-        </motion.p>
-        <motion.p className="meta hero__city" variants={revealItem}>
-          Odesa
-        </motion.p>
+        <div className="hero__meta">
+          <motion.p className="meta hero__date" variants={revealItem}>
+            Oct 31 · 17:00
+          </motion.p>
+          <motion.p className="meta hero__venue" variants={revealItem}>
+            Lesok Café
+          </motion.p>
+          <motion.p className="meta hero__city" variants={revealItem}>
+            Odesa
+          </motion.p>
+        </div>
         <motion.div className="hero__title" variants={revealItem}>
           <span>A Birthday</span>
           <strong>Gone Dark</strong>
