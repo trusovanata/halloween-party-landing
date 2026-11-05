@@ -717,7 +717,7 @@ footer {
 .spider__small {
   position: absolute;
   z-index: 3;
-  top: 395px;
+  top: 20px;
   right: -30px;
   /* .spider__media — фиксированные 570px высоты, а top здесь — тоже
      фиксированный px. На узких экранах 55vw (ширина) давала картинку
