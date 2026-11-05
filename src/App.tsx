@@ -100,6 +100,7 @@ export default function App() {
   const pumpkinRotateY = useSpring(cursorRotateY, springConfig)
   const [hasFinePointer, setHasFinePointer] = useState(false)
   const [pumpkinPlaybackBlocked, setPumpkinPlaybackBlocked] = useState(false)
+  const [pumpkinReady, setPumpkinReady] = useState(false)
   const [pumpkinVideoError, setPumpkinVideoError] = useState<string | null>(
     null,
   )
@@ -344,7 +345,9 @@ export default function App() {
             }}
           >
             <motion.div
-              className="hero__pumpkin-motion"
+              className={`hero__pumpkin-motion ${
+                pumpkinReady ? "" : "hero__pumpkin-motion--loading"
+              }`}
               ref={pumpkinMotion}
               style={{
                 x: pumpkinX,
@@ -366,7 +369,10 @@ export default function App() {
                   setPumpkinVideoError("The pumpkin video could not be loaded.")
                   setPumpkinPlaybackBlocked(false)
                 }}
-                onPlaying={() => setPumpkinPlaybackBlocked(false)}
+                onPlaying={() => {
+                  setPumpkinPlaybackBlocked(false)
+                  setPumpkinReady(true)
+                }}
                 playsInline
                 preload="auto"
                 ref={pumpkinVideo}

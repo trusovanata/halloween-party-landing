@@ -317,6 +317,17 @@ a:focus-visible {
   will-change: transform;
 }
 
+/* Пока видео ещё не начало проигрываться (блокировка автоплея,
+   медленная сеть) — лёгкое тыквенное свечение вместо пустого места.
+   Снимается, как только видео реально заиграло. */
+.hero__pumpkin-motion--loading {
+  background: radial-gradient(
+    ellipse 70% 65% at 50% 55%,
+    rgba(252, 163, 5, 0.22),
+    transparent 72%
+  );
+}
+
 .hero__video {
   display: block;
   width: 100%;
