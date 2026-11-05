@@ -309,23 +309,10 @@ a:focus-visible {
 .hero__pumpkin-motion {
   position: relative;
   overflow: hidden;
-  background: #000;
-  /* Маска и фон — на обёртке (обычный div), не на самом <video>.
-     У replaced-элементов (video/img) браузеры не всегда применяют
-     mask к собственному background одинаково — отсюда был виден
-     полупрозрачный квадрат по контуру кадра вместо мягкого растворения
-     в фон страницы. На div с overflow:hidden маска работает надёжно
-     и для фона, и для содержимого разом. */
-  -webkit-mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    ellipse 85% 85% at 50% 50%,
-    #000 70%,
-    transparent 100%
-  );
+  /* Видео теперь вырезано по контуру в After Effects (Roto Brush,
+     настоящий альфа-канал) — маска и чёрная подложка, которые
+     раньше изображали «растворение» прямоугольного кадра, больше
+     не нужны: прозрачность уже настоящая, кадра как такового нет. */
   transform-style: preserve-3d;
   will-change: transform;
 }

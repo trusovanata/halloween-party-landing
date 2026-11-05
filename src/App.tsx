@@ -371,6 +371,7 @@ export default function App() {
                 preload="auto"
                 ref={pumpkinVideo}
               >
+                <source src="/video/pumpkin-loop-alpha.webm" type="video/webm" />
                 <source src="/video/pumpkin-loop.mp4" type="video/mp4" />
               </video>
               {pumpkinPlaybackBlocked && !pumpkinVideoError && (
