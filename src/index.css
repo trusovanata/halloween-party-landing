@@ -54,6 +54,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Шапка fixed — без этого якорные переходы (When / Dress code / Where)
+     прячут верх целевой секции под стеклом. Высота как у .header. */
+  scroll-padding-top: 76px;
   background: #000;
 }
 
@@ -1438,6 +1441,23 @@ footer {
        --side, но от края виртуальной страницы 1920, а не от края
        реального, более широкого окна. */
     padding: 0 calc(max(0px, (100vw - 1920px) / 2) + var(--side));
+  }
+
+  html {
+    scroll-padding-top: 5.677vw;
+  }
+
+  /* На десктопе секция Dress code — это фото паука высотой ~58vw, а сам
+     текст лежит на 55vw ниже верха. Якорь на верх секции показывал одно
+     фото, и казалось, что перехода не было. Уходим глубже в секцию, чтобы
+     в кадре были и паук, и заголовок "Masks encouraged". */
+  #dress-code {
+    scroll-margin-top: -32vw;
+  }
+
+  /* У .venue на десктопе подпись "Where" прижата к самому верху секции. */
+  #where {
+    scroll-margin-top: 3vw;
   }
 
   .site-shell {
