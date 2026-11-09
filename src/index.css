@@ -1364,6 +1364,7 @@ footer {
     top: 220px;
     right: -20px;
     width: min(32vw, 280px);
+    max-height: none;
   }
 
   .dress-copy h3 {
@@ -1643,6 +1644,7 @@ footer {
     right: 13.542vw;
     width: 20.573vw;
     max-width: none;
+    max-height: none;
   }
 
   .dress-copy {
