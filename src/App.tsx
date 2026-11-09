@@ -460,12 +460,19 @@ export default function App() {
       </motion.section>
 
       <section className="magic" id="when">
-        <div className="magic__photo">
+        <motion.div
+          className="magic__photo"
+          initial={shouldReduceMotion ? false : { opacity: 0, x: 140 }}
+          style={{ rotate: 14.9 }}
+          transition={{ duration: 0.9, ease: REVEAL_EASE }}
+          viewport={{ amount: 0.25, once: true }}
+          whileInView={{ opacity: 1, x: 0 }}
+        >
           <img
             src={`${A}/e465c.png`}
             alt="Two witches DJing beneath a giant pumpkin"
           />
-        </div>
+        </motion.div>
         <div className="when">
           <p className="eyebrow">When</p>
           <h2>Oct 31 · 17:00</h2>
@@ -476,11 +483,11 @@ export default function App() {
         </div>
         <motion.div
           className="rave-player"
-          initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, x: -140 }}
           style={{ rotate: -13.65 }}
-          transition={{ duration: 0.75, ease: REVEAL_EASE }}
+          transition={{ duration: 0.9, ease: REVEAL_EASE, delay: 0.15 }}
           viewport={{ amount: 0.25, once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, x: 0 }}
         >
           <video
             ref={raveVideo}

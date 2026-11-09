@@ -491,7 +491,6 @@ a:focus-visible {
   max-width: 350px;
   justify-self: end;
   overflow: hidden;
-  transform: rotate(14.9deg);
 }
 
 .magic__photo img {
