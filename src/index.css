@@ -53,6 +53,10 @@
   --ember-rgb: 252 163 5;
   --ember-soft: #e19314;
   --header-h: 76px;
+  /* Вертикальный зазор между секциями (токен дизайн-системы): 64px на
+     мобильном, растёт с шириной до 160px. Только для потоковой раскладки
+     (<1200px): на десктопе секции стоят постером в vw. */
+  --space-section-y: clamp(4rem, 8vw, 10rem);
   --content: min(87.5vw, 1680px);
   --side: max(24px, calc((100vw - var(--content)) / 2));
 }
@@ -982,7 +986,7 @@ footer {
 
 .dance {
   position: relative;
-  padding-top: 80px;
+  padding-top: var(--space-section-y);
 }
 
 .pose {
@@ -1025,8 +1029,9 @@ footer {
 }
 
 .countdown {
-  /* Было 130px снизу — заметный пустой провал перед "Find the Coven". */
-  padding: 60px 24px 60px;
+  /* Зазор между секциями — только сверху (--space-section-y), снизу 0:
+     иначе он удваивается со следующей секцией. */
+  padding: var(--space-section-y) 24px 0;
   text-align: center;
 }
 
@@ -1069,9 +1074,9 @@ footer {
 
 .venue {
   display: grid;
-  /* Было 120px снизу — вместе с 90px сверху у .rsvp давало ~210px
-     пустоты перед "Claim your seat". */
-  padding: 60px 24px 60px;
+  /* Зазор только сверху (--space-section-y); снизу 0, чтобы не
+     удваиваться с .rsvp. */
+  padding: var(--space-section-y) 24px 0;
   gap: 32px;
 }
 
@@ -1131,8 +1136,10 @@ footer {
 
 .rsvp {
   position: relative;
-  min-height: 1030px;
-  padding: 48px 24px 110px;
+  /* Высоту задаёт форма, а не min-height:1030px — он давал ~190px
+     пустоты между кнопкой и красной полосой на мобильном. */
+  min-height: 0;
+  padding: var(--space-section-y) 24px var(--space-section-y);
   background: url("/assets/227b9.png") center / cover no-repeat;
 }
 
@@ -1350,7 +1357,7 @@ footer {
        = 64px на мобильном); .magic ниже без своего padding-top. */
     min-height: 0;
     padding-top: 16px;
-    padding-bottom: 64px;
+    padding-bottom: var(--space-section-y);
   }
 
   .hero__video-frame {
