@@ -1528,11 +1528,11 @@ footer {
   .hero__glow {
     position: absolute;
     z-index: -1;
-    top: -6vw;
-    right: -24vw;
+    top: 0;
+    right: -49vw;
     display: block;
-    width: 104vw;
-    height: 76vw;
+    width: 130vw;
+    height: 96vw;
     background: radial-gradient(
       ellipse 50% 50% at 50% 50%,
       rgba(6, 135, 175, 0.5) 0%,
@@ -1610,6 +1610,9 @@ footer {
 
   .button--hero {
     position: absolute;
+    /* Мобильные z-index:20 (кнопка поверх всего) на десктопе приводил к
+       тому, что кнопка при прокрутке проезжала поверх шапки (тоже 20). */
+    z-index: 7;
     top: 41vw;
     right: auto;
     bottom: auto;
