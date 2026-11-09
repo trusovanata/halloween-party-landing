@@ -545,6 +545,7 @@ export default function App() {
                   setPumpkinReady(true)
                 }}
                 playsInline
+                poster="/assets/pumpkin-poster.webp"
                 preload="auto"
                 ref={pumpkinVideo}
               >
