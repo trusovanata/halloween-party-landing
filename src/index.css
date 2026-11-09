@@ -1414,8 +1414,10 @@ footer {
   }
 
   .spider__small {
-    top: 220px;
-    right: -20px;
+    /* В углу фото паука, как на мобильном: при top:220px полароид
+       (высота ~300px + поворот) вылезал ниже блока на "Faces optional". */
+    top: 36px;
+    right: 3vw;
     width: min(32vw, 280px);
     max-height: none;
   }
