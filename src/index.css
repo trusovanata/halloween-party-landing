@@ -747,6 +747,11 @@ footer {
   max-width: min(55vw, 330px);
   max-height: 160px;
   transform: rotate(19.3deg);
+  /* Полароид: кремовая рамка, нижний край толще, мягкая тень. */
+  box-sizing: border-box;
+  padding: 7px 7px 26px;
+  background: #f3ede2;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .dress-copy {
@@ -1735,6 +1740,7 @@ footer {
     width: 20.573vw;
     max-width: none;
     max-height: none;
+    padding: 0.55vw 0.55vw 2.1vw;
   }
 
   .dress-copy {
