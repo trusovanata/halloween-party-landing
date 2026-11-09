@@ -6,6 +6,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react"
+import { Fog } from "./Fog"
 import { Lasers } from "./Lasers"
 
 const A = "/assets"
@@ -186,6 +187,7 @@ export default function App() {
   const [hasFinePointer, setHasFinePointer] = useState(false)
   const [pumpkinPlaybackBlocked, setPumpkinPlaybackBlocked] = useState(false)
   const [pumpkinReady, setPumpkinReady] = useState(false)
+  const [fogReady, setFogReady] = useState(false)
   const [pumpkinVideoError, setPumpkinVideoError] = useState<string | null>(
     null,
   )
@@ -768,12 +770,13 @@ export default function App() {
         <h2 className="dance__title">
           <SplitLetters text="Dance more" />
         </h2>
-        <div className="dance__media">
+        <div className={`dance__media ${fogReady ? "dance__media--fog" : ""}`}>
           <img
             src={`${A}/ec6e2.png`}
             alt="Halloween dance party in a blue fog"
           />
           <Lasers />
+          {!shouldReduceMotion && <Fog onReady={setFogReady} />}
           <div aria-hidden="true" className="dance__smoke">
             <svg height="0" width="0">
               <filter
