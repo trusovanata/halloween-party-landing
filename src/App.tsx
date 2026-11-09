@@ -315,8 +315,8 @@ export default function App() {
       // трети экрана от тыквы, а не на краю окна.
       cursorX.set(x * 44)
       cursorY.set(y * 32)
-      cursorRotateX.set(y * -10)
-      cursorRotateY.set(x * 12)
+      cursorRotateX.set(y * -6)
+      cursorRotateY.set(x * 8)
     }
 
     const resetPumpkin = () => {
