@@ -725,7 +725,9 @@ footer {
 }
 
 .decks h2 {
-  margin-top: 10px;
+  /* Зазор «подпись → заголовок» во всех секциях одинаков: 0 между
+     блоками (сетка 4px), воздух даёт сам line-height заголовка. */
+  margin-top: 0;
   font-size: 48px;
   line-height: 1.1;
 }
@@ -1037,7 +1039,8 @@ footer {
 
 .countdown__units {
   display: grid;
-  margin-top: 32px;
+  /* Подпись → цифры: 0 между блоками, как у заголовков секций. */
+  margin-top: 0;
   grid-template-columns: repeat(2, 1fr);
   gap: 28px 20px;
 }
@@ -1462,6 +1465,13 @@ footer {
   .venue h2,
   .rsvp h2 {
     font-size: clamp(52px, 16vw, 64px);
+  }
+
+  /* В колонке подпись «Where» и заголовок разделяет gap:32px у .venue —
+     у остальных секций между подписью и заголовком 0. Гасим этот gap
+     только для пары подпись → заголовок. */
+  .venue h2 {
+    margin-top: -32px;
   }
 
   .venue__info strong {
