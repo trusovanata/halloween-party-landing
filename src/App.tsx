@@ -177,7 +177,7 @@ export default function App() {
   const cursorY = useMotionValue(0)
   const cursorRotateX = useMotionValue(0)
   const cursorRotateY = useMotionValue(0)
-  const springConfig = { stiffness: 85, damping: 20, mass: 0.8 }
+  const springConfig = { stiffness: 120, damping: 18, mass: 0.8 }
   const pumpkinX = useSpring(cursorX, springConfig)
   const pumpkinY = useSpring(cursorY, springConfig)
   const pumpkinRotateX = useSpring(cursorRotateX, springConfig)
@@ -303,17 +303,20 @@ export default function App() {
       const centerY = rect.top + rect.height / 2
       const x = Math.max(
         -1,
-        Math.min(1, (event.clientX - centerX) / (window.innerWidth / 2)),
+        Math.min(1, (event.clientX - centerX) / (window.innerWidth / 3)),
       )
       const y = Math.max(
         -1,
-        Math.min(1, (event.clientY - centerY) / (window.innerHeight / 2)),
+        Math.min(1, (event.clientY - centerY) / (window.innerHeight / 3)),
       )
 
-      cursorX.set(x * 12)
-      cursorY.set(y * 10)
-      cursorRotateX.set(y * -2.5)
-      cursorRotateY.set(x * 3)
+      // Усилено: было 12/10px и 2.5/3° — слежение за курсором почти не
+      // читалось на записи экрана. Крайнее значение достигается уже на
+      // трети экрана от тыквы, а не на краю окна.
+      cursorX.set(x * 44)
+      cursorY.set(y * 32)
+      cursorRotateX.set(y * -10)
+      cursorRotateY.set(x * 12)
     }
 
     const resetPumpkin = () => {
