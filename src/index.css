@@ -1757,13 +1757,17 @@ footer {
   }
 
   .dance__title {
+    /* Как и на мобильном — поверх нижней, тёмной части фото
+       (.dance__media: top 19.688vw + ~80% его высоты 57.031vw),
+       по центру страницы. */
     position: absolute;
-    top: 13.177vw;
-    right: auto;
-    left: 28.646vw;
+    top: 65.469vw;
+    right: 0;
+    left: 0;
     margin: 0;
     font-size: 6.667vw;
     line-height: 9.375vw;
+    text-align: center;
   }
 
   .dance__media {
