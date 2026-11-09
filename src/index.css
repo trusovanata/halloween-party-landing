@@ -1496,11 +1496,15 @@ footer {
 
   .hero__video-frame {
     position: absolute;
-    top: -0.521vw;
+    top: 1.6vw;
     left: 33.542vw;
     width: min(38.646vw, 742px);
     height: min(37.188vw, 714px);
     margin: 0;
+    /* Тыква поверх "GONE DARK": у надписи z-index 7, видео-кадр
+       выше — тыква с настоящей прозрачностью закрывает буквы только
+       своим контуром. */
+    z-index: 8;
   }
 
   .hero__eyebrow {
