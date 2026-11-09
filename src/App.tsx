@@ -6,7 +6,7 @@ import {
   useReducedMotion,
   useSpring,
 } from "motion/react"
-import { LightRays } from "./LightRays"
+import { Lasers } from "./Lasers"
 
 const A = "/assets"
 const MARQUEE_UNIT =
@@ -773,7 +773,7 @@ export default function App() {
             src={`${A}/ec6e2.png`}
             alt="Halloween dance party in a blue fog"
           />
-          <LightRays />
+          <Lasers />
           <div aria-hidden="true" className="dance__smoke">
             <svg height="0" width="0">
               <filter
