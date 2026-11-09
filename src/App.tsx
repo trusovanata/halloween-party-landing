@@ -426,6 +426,7 @@ export default function App() {
         ref={heroSection}
         variants={heroStagger}
       >
+        <div aria-hidden="true" className="hero__glow" />
         <motion.div className="hero__video-frame" variants={revealItem}>
           <motion.div
             animate={

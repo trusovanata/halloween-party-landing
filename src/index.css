@@ -294,6 +294,14 @@ a:focus-visible {
   text-align: center;
 }
 
+/* Синее свечение за героем — только на десктопе (на мобильном такое же
+   даёт ambient-glows, а там 5-я часть страницы). Лежит ПОД контентом:
+   z-index:-1 внутри изолированного .site-shell — выше его чёрного фона,
+   но ниже тыквы и надписей. */
+.hero__glow {
+  display: none;
+}
+
 .hero__video-frame {
   width: min(92vw, 520px);
   aspect-ratio: 742 / 714;
@@ -1515,6 +1523,23 @@ footer {
     min-height: 51.98vw;
     padding: 0;
     text-align: initial;
+  }
+
+  .hero__glow {
+    position: absolute;
+    z-index: -1;
+    top: 6vw;
+    right: -6vw;
+    display: block;
+    width: 58vw;
+    height: 44vw;
+    background: radial-gradient(
+      ellipse 50% 50% at 50% 50%,
+      rgba(6, 135, 175, 0.62) 0%,
+      rgba(38, 72, 84, 0.14) 58%,
+      rgba(41, 21, 11, 0) 100%
+    );
+    pointer-events: none;
   }
 
   .hero__video-frame {
