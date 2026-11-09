@@ -113,7 +113,7 @@ function SplitLetters({
                   aria-hidden="true"
                   initial={
                     bounce
-                      ? { opacity: 0, y: 80, rotate: -10 }
+                      ? { opacity: 0, y: 50 }
                       : { opacity: 0, y: 60 }
                   }
                   key={`${char}-${charIndex}`}
@@ -122,8 +122,8 @@ function SplitLetters({
                     bounce
                       ? {
                           type: "spring",
-                          stiffness: 420,
-                          damping: 14,
+                          stiffness: 260,
+                          damping: 20,
                           delay: delay + i * 0.05,
                         }
                       : {
@@ -133,7 +133,7 @@ function SplitLetters({
                         }
                   }
                   viewport={{ once: true, amount: 0.3 }}
-                  whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                 >
                   {char}
                 </motion.span>
