@@ -421,7 +421,7 @@ a:focus-visible {
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.55);
 }
 
-.hero__title span {
+.hero__title > span {
   color: var(--ember);
   font-size: clamp(40px, 13vw, 72px);
   line-height: 1.4;
@@ -1145,7 +1145,7 @@ footer {
     margin-top: 12px;
   }
 
-  .hero__title span {
+  .hero__title > span {
     line-height: 1.2;
   }
 
@@ -1463,7 +1463,7 @@ footer {
     line-height: 1.25vw;
   }
 
-  .hero__title span,
+  .hero__title > span,
   .hero__title strong,
   .display-title span,
   .when h2,
@@ -1541,7 +1541,7 @@ footer {
     text-align: left;
   }
 
-  .hero__title span {
+  .hero__title > span {
     position: absolute;
     top: 21.5vw;
     left: var(--side);

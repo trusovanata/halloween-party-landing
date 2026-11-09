@@ -83,6 +83,70 @@ function Fade({ direction = "top" }: { direction?: "top" | "bottom" }) {
   return <span aria-hidden="true" className={`fade fade--${direction}`} />
 }
 
+function SplitLetters({
+  text,
+  delay = 0,
+  bounce = false,
+}: {
+  text: string
+  delay?: number
+  bounce?: boolean
+}) {
+  const shouldReduceMotion = useReducedMotion()
+  if (shouldReduceMotion) return <>{text}</>
+
+  const words = text.split(" ")
+  let index = 0
+  // Каждая буква — отдельный inline-block, а у блоков нет кернинга шрифта:
+  // строка получалась на ~0.0145em на букву шире и вылезала за край колонки.
+  // Отрицательный margin возвращает прежнюю ширину.
+
+  return (
+    <span aria-label={text}>
+      {words.map((word, wordIndex) => (
+        <span key={`${word}-${wordIndex}`}>
+          <span style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+            {[...word].map((char, charIndex) => {
+              const i = index++
+              return (
+                <motion.span
+                  aria-hidden="true"
+                  initial={
+                    bounce
+                      ? { opacity: 0, y: 80, rotate: -10 }
+                      : { opacity: 0, y: 60 }
+                  }
+                  key={`${char}-${charIndex}`}
+                  style={{ display: "inline-block", marginRight: "-0.0145em" }}
+                  transition={
+                    bounce
+                      ? {
+                          type: "spring",
+                          stiffness: 420,
+                          damping: 14,
+                          delay: delay + i * 0.05,
+                        }
+                      : {
+                          duration: 0.7,
+                          ease: REVEAL_EASE,
+                          delay: delay + i * 0.06,
+                        }
+                  }
+                  viewport={{ once: true, amount: 0.3 }}
+                  whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+                >
+                  {char}
+                </motion.span>
+              )
+            })}
+          </span>
+          {wordIndex < words.length - 1 ? " " : null}
+        </span>
+      ))}
+    </span>
+  )
+}
+
 export default function App() {
   const backgroundAudio = useRef<HTMLAudioElement>(null)
   const heroSection = useRef<HTMLElement>(null)
@@ -90,6 +154,15 @@ export default function App() {
   const pumpkinVideo = useRef<HTMLVideoElement>(null)
   const raveVideo = useRef<HTMLVideoElement>(null)
   const shouldReduceMotion = useReducedMotion()
+  const slideIn = (from: "left" | "right", delay = 0) =>
+    shouldReduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, x: from === "left" ? -90 : 90 },
+          transition: { duration: 0.8, ease: REVEAL_EASE, delay },
+          viewport: { once: true, amount: 0.4 },
+          whileInView: { opacity: 1, x: 0 },
+        }
   const cursorX = useMotionValue(0)
   const cursorY = useMotionValue(0)
   const cursorRotateX = useMotionValue(0)
@@ -450,7 +523,9 @@ export default function App() {
         </div>
         <motion.div className="hero__title" variants={revealItem}>
           <span>A Birthday</span>
-          <strong>Gone Dark</strong>
+          <strong>
+            <SplitLetters delay={0.7} text="Gone Dark" />
+          </strong>
         </motion.div>
         <Button
           className={`button--hero ${heroInView ? "" : "is-hero-hidden"}`}
@@ -475,11 +550,11 @@ export default function App() {
         </motion.div>
         <div className="when">
           <p className="eyebrow">When</p>
-          <h2>Oct 31 · 17:00</h2>
+          <motion.h2 {...slideIn("left")}>Oct 31 · 17:00</motion.h2>
         </div>
         <div className="magic__title display-title">
-          <span>One night</span>
-          <span>All the magic</span>
+          <motion.span {...slideIn("left")}>One night</motion.span>
+          <motion.span {...slideIn("right", 0.12)}>All the magic</motion.span>
         </div>
         <motion.div
           className="rave-player"
@@ -520,11 +595,13 @@ export default function App() {
             <span />
           </motion.button>
         </motion.div>
-        <h3 className="after-dark">After dark</h3>
+        <motion.h3 className="after-dark" {...slideIn("right")}>
+          After dark
+        </motion.h3>
         <div className="seam-fade seam-fade--magic-spider" aria-hidden="true" />
         <div className="decks">
           <p className="eyebrow">Live from the other side</p>
-          <h2>The witches take the decks</h2>
+          <motion.h2 {...slideIn("left")}>The witches take the decks</motion.h2>
           <p>Doors open. Bass drops.</p>
         </div>
       </section>
@@ -541,8 +618,8 @@ export default function App() {
         <img className="spider__small" src={`${A}/80a84.png`} alt="" />
         <div className="dress-copy">
           <p className="eyebrow">Dress code</p>
-          <h2>Masks encouraged</h2>
-          <h3>Faces optional</h3>
+          <motion.h2 {...slideIn("left")}>Masks encouraged</motion.h2>
+          <motion.h3 {...slideIn("right", 0.12)}>Faces optional</motion.h3>
           <p>
             No prizes.
             <br />
@@ -553,10 +630,12 @@ export default function App() {
 
       <section className="dance">
         <div className="pose">
-          <h2>Strike a pose</h2>
+          <motion.h2 {...slideIn("right")}>Strike a pose</motion.h2>
           <p>Then lose control</p>
         </div>
-        <h2 className="dance__title">Dance more</h2>
+        <h2 className="dance__title">
+          <SplitLetters bounce text="Dance more" />
+        </h2>
         <div className="dance__media">
           <img
             src={`${A}/ec6e2.png`}
@@ -586,7 +665,7 @@ export default function App() {
 
       <section className="venue" id="where">
         <p className="eyebrow venue__eyebrow">Where</p>
-        <h2>Find the coven</h2>
+        <motion.h2 {...slideIn("right")}>Find the coven</motion.h2>
         <div className="venue__info">
           <img src={`${A}/bccad.svg`} alt="" />
           <strong>Lesok Café</strong>
@@ -615,7 +694,7 @@ export default function App() {
         <Fade />
         <Fade direction="bottom" />
         <div className="rsvp__inner">
-          <h2>Claim your seat</h2>
+          <motion.h2 {...slideIn("left")}>Claim your seat</motion.h2>
           <div className="rsvp__badge">
             <svg
               className="rsvp__badge-ring"
