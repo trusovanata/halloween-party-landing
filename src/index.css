@@ -149,6 +149,49 @@ html {
   background-repeat: no-repeat;
 }
 
+/* Седьмое свечение (оранжевое, по центру страницы, y = 349.58vw) привязано
+   к макету 1920: там оно за "Strike a pose". На узких экранах секции короче,
+   контент съезжает, и оно оказывается круглым пятном посреди чёрного
+   промежутка между "Faces optional" и "Strike a pose". Ниже 1200px его нет;
+   остальные шесть уходят к краям страницы и не заметны как пятно. */
+@media (max-width: 1199px) {
+  .ambient-glows {
+    background-image:
+      radial-gradient(
+        ellipse 18vw 14vw at 91vw 8vw,
+        rgba(93, 45, 17, 0.38) 0%,
+        rgba(41, 21, 11, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 45vw 50vw at 10.26vw 68.23vw,
+        rgba(255, 113, 29, 0.54) 0%,
+        rgba(41, 21, 11, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 24vw 23vw at 112.97vw 84.58vw,
+        rgba(93, 45, 17, 0.54) 0%,
+        rgba(41, 21, 11, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 79.3vw 61.85vw at 96vw 120.63vw,
+        rgba(6, 135, 175, 0.95) 0%,
+        rgba(38, 72, 84, 0.1) 59.13%,
+        rgba(41, 21, 11, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 50vw 56vw at 106.82vw 208.44vw,
+        rgba(255, 113, 29, 0.54) 0%,
+        rgba(41, 21, 11, 0) 100%
+      ),
+      radial-gradient(
+        ellipse 83.85vw 83.18vw at 96vw 287.86vw,
+        rgba(6, 135, 175, 0.95) 0%,
+        rgba(38, 72, 84, 0.1) 59.13%,
+        rgba(41, 21, 11, 0) 100%
+      );
+  }
+}
+
 .header {
   position: fixed;
   top: 0;
