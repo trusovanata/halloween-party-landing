@@ -1523,8 +1523,11 @@ footer {
   .button--hero {
     position: absolute;
     top: 41vw;
+    right: auto;
+    bottom: auto;
     left: 43.5vw;
     width: 13vw;
+    max-width: none;
     min-height: 3.75vw;
     margin: 0;
     font-size: 1.05vw;
