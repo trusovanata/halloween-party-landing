@@ -715,6 +715,15 @@ footer {
   container-type: size;
 }
 
+.spider__trigger {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  pointer-events: none;
+}
+
 .spider__flash-layer {
   position: absolute;
   z-index: 6;
@@ -750,6 +759,105 @@ footer {
   inset: 0;
   background: #fff4e1;
   pointer-events: none;
+}
+
+/* Дым из пасти большой тыквы в .dance__media. Слой повторяет геометрию
+   object-fit:cover картинки 1344x768 (как .spider__flash-layer), поэтому
+   проценты — это координаты самого фото: пасть ~ (51%, 42%). Ниже .fade
+   (z-index 5), выше картинки. */
+.dance__media {
+  container-type: size;
+}
+
+.dance__smoke {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: max(100%, calc(100cqh * 1344 / 768));
+  aspect-ratio: 1344 / 768;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+/* Вершина каждого конуса — в пасти (51.3%, 41% картинки): контейнер
+   22% x 40% слоя, его верхний центр = вершина; поворачивается вокруг неё
+   (--rot: влево/вправо). */
+.dance__stream {
+  position: absolute;
+  top: 39%;
+  left: 44.8%;
+  width: 13%;
+  height: 44%;
+  filter: url("#smoke-wisp");
+  transform: rotate(var(--rot));
+  transform-origin: 50% 0;
+}
+
+.dance__cone {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(50% 0, 2% 100%, 98% 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 214, 160, 0.5) 0%,
+    rgba(222, 240, 250, 0.34) 34%,
+    rgba(200, 226, 242, 0) 100%
+  );
+  animation: smoke-cone 4.5s ease-in-out infinite;
+}
+
+.dance__wisp {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 9%;
+  height: 26%;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 50% 50% at 50% 34%,
+    rgba(244, 250, 254, 0.9) 0%,
+    rgba(208, 230, 244, 0.45) 46%,
+    rgba(190, 220, 238, 0) 76%
+  );
+  opacity: 0;
+  transform-origin: 50% 0;
+  will-change: transform, opacity;
+  animation: smoke-flow 5.4s ease-in infinite;
+}
+
+@keyframes smoke-cone {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes smoke-flow {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0) rotate(var(--a)) translateY(0) scale(0.5, 0.4);
+  }
+
+  15% {
+    opacity: 0.8;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 0) rotate(var(--a)) translateY(330%)
+      scale(1.9, 2.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dance__smoke {
+    display: none;
+  }
 }
 
 .spider__media > img,

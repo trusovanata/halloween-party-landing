@@ -80,6 +80,22 @@ function Button({
   )
 }
 
+// Дым из пасти большой тыквы: две струи-конуса с вершиной в пасти, одна влево,
+// другая вправо (почти горизонтально, мимо ведьм), как лучи. rot — поворот всего конуса от
+// вертикали вниз (°, + влево), a — угол отдельной струи внутри конуса.
+const SMOKE_SIDES = [
+  { rot: 80, offset: 0 },
+  { rot: -80, offset: 1.3 },
+] as const
+const SMOKE_STREAMS = [
+  { a: -9, delay: 0, duration: 5.4 },
+  { a: -4, delay: 0.9, duration: 5 },
+  { a: 0, delay: 1.8, duration: 5.6 },
+  { a: 4, delay: 0.5, duration: 5.2 },
+  { a: 9, delay: 1.4, duration: 5.5 },
+  { a: -2, delay: 2.7, duration: 5.3 },
+] as const
+
 function Fade({ direction = "top" }: { direction?: "top" | "bottom" }) {
   return <span aria-hidden="true" className={`fade fade--${direction}`} />
 }
@@ -136,8 +152,14 @@ function SplitLetters({
 export default function App() {
   const backgroundAudio = useRef<HTMLAudioElement>(null)
   const heroSection = useRef<HTMLElement>(null)
-  const spiderMedia = useRef<HTMLDivElement>(null)
-  const spiderInView = useInView(spiderMedia, { amount: 0.55, once: true })
+  // Вспышка — когда середина фото паука доехала до средней трети экрана,
+  // а не когда блок только показался с края: иначе зритель ещё не дошёл
+  // до него глазами и эффект пропадает.
+  const spiderTrigger = useRef<HTMLDivElement>(null)
+  const spiderInView = useInView(spiderTrigger, {
+    margin: "-35% 0px -35% 0px",
+    once: true,
+  })
   const pumpkinMotion = useRef<HTMLDivElement>(null)
   const pumpkinVideo = useRef<HTMLVideoElement>(null)
   const raveVideo = useRef<HTMLVideoElement>(null)
@@ -596,7 +618,8 @@ export default function App() {
       </section>
 
       <section className="spider" id="dress-code">
-        <div className="spider__media" ref={spiderMedia}>
+        <div className="spider__media">
+          <div aria-hidden="true" className="spider__trigger" ref={spiderTrigger} />
           <img
             src={`${A}/d2eef.png`}
             alt="A giant spider silhouetted by orange light"
@@ -610,7 +633,7 @@ export default function App() {
                 aria-hidden="true"
                 className="spider__flash-wash"
                 initial={{ opacity: 0 }}
-                transition={{ delay: 0.45, duration: 0.6, times: [0, 0.15, 1] }}
+                transition={{ delay: 0.8, duration: 0.6, times: [0, 0.15, 1] }}
               />
               <div aria-hidden="true" className="spider__flash-layer">
                 <motion.span
@@ -622,7 +645,7 @@ export default function App() {
                   className="spider__flash"
                   initial={{ opacity: 0, scale: 0.2 }}
                   transition={{
-                    delay: 0.45,
+                    delay: 0.8,
                     duration: 0.7,
                     ease: "easeOut",
                     times: [0, 0.18, 1],
@@ -658,10 +681,10 @@ export default function App() {
           src={`${A}/80a84.png`}
           style={{ rotate: 19.3 }}
           transition={{
-            filter: { delay: 0.9, duration: 1.6 },
-            opacity: { delay: 0.85, duration: 0.35 },
-            scale: { delay: 0.85, duration: 0.7, ease: REVEAL_EASE },
-            y: { delay: 0.85, duration: 0.7, ease: REVEAL_EASE },
+            filter: { delay: 1.25, duration: 1.6 },
+            opacity: { delay: 1.2, duration: 0.35 },
+            scale: { delay: 1.2, duration: 0.7, ease: REVEAL_EASE },
+            y: { delay: 1.2, duration: 0.7, ease: REVEAL_EASE },
           }}
         />
         <div className="dress-copy">
@@ -689,6 +712,62 @@ export default function App() {
             src={`${A}/ec6e2.png`}
             alt="Halloween dance party in a blue fog"
           />
+          <div aria-hidden="true" className="dance__smoke">
+            <svg height="0" width="0">
+              <filter
+                height="200%"
+                id="smoke-wisp"
+                width="200%"
+                x="-50%"
+                y="-50%"
+              >
+                <feTurbulence
+                  baseFrequency="0.012 0.03"
+                  numOctaves="3"
+                  result="noise"
+                  seed="4"
+                  type="fractalNoise"
+                >
+                  <animate
+                    attributeName="baseFrequency"
+                    dur="10s"
+                    repeatCount="indefinite"
+                    values="0.012 0.03;0.02 0.045;0.012 0.03"
+                  />
+                </feTurbulence>
+                <feDisplacementMap
+                  in="SourceGraphic"
+                  in2="noise"
+                  scale="70"
+                  xChannelSelector="R"
+                  yChannelSelector="G"
+                />
+                <feGaussianBlur stdDeviation="3" />
+              </filter>
+            </svg>
+            {SMOKE_SIDES.map((side) => (
+              <div
+                className="dance__stream"
+                key={side.rot}
+                style={{ "--rot": `${side.rot}deg` } as React.CSSProperties}
+              >
+                <span className="dance__cone" />
+                {SMOKE_STREAMS.map((stream, index) => (
+                  <span
+                    className="dance__wisp"
+                    key={index}
+                    style={
+                      {
+                        "--a": `${stream.a}deg`,
+                        animationDelay: `${stream.delay + side.offset}s`,
+                        animationDuration: `${stream.duration}s`,
+                      } as React.CSSProperties
+                    }
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
           <Fade />
           <Fade direction="bottom" />
         </div>
