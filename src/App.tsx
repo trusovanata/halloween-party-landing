@@ -124,12 +124,21 @@ export default function App() {
     const section = heroSection.current
     if (!section) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeroInView(entry.isIntersecting),
-      { threshold: 0 },
-    )
-    observer.observe(section)
-    return () => observer.disconnect()
+    // CTA первого экрана: виден на самом верху и пока низ hero не поднялся
+    // до зоны кнопки (~96px от нижнего края) — дальше она не должна висеть
+    // поверх следующей секции.
+    const update = () => {
+      const { bottom } = section.getBoundingClientRect()
+      setHeroInView(window.scrollY < 8 || bottom > window.innerHeight - 96)
+    }
+
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
   }, [])
 
   const toggleSiteAudio = async () => {

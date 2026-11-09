@@ -1124,7 +1124,13 @@ footer {
      высоту у пустых полей вокруг тыквы (видео-кадр имеет ~35px
      прозрачности сверху и снизу) и у отступов между блоками. */
   .hero {
+    /* Высота — по контенту, а не max(780px,100dvh): на телефоне 735px
+       высоты это давало ~45px пустого хвоста + 70px padding. Зазор до
+       следующей секции — токен дизайн-системы --space-section-y (4rem
+       = 64px на мобильном); .magic ниже без своего padding-top. */
+    min-height: 0;
     padding-top: 16px;
+    padding-bottom: 64px;
   }
 
   .hero__video-frame {
@@ -1146,7 +1152,7 @@ footer {
 
   .magic {
     display: flex;
-    padding-top: 48px;
+    padding-top: 0;
     flex-direction: column;
     gap: 36px;
   }
