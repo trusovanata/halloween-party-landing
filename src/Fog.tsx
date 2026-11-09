@@ -41,22 +41,22 @@ void main(){
     float w=.05+.3*along;
     float body=smoothstep(.0,.05,along)*(1.-smoothstep(.28,.78,along));
     float core=exp(-pow(across/max(w,.001),2.));
-    vec2 q=vec2(s*along*3.2-t*.18*s*-1.,across*4.5);
+    vec2 q=vec2(s*along*3.2-t*.3*s,across*4.5); // дрейф ОТ пасти к краям
     float c=cloud(q+vec2(float(k)*7.3,0.),t);
     dens+=body*core*smoothstep(.15,.65,c)*2.4;
   }
 
   // низкий туман над толпой, дрейфует вбок
   float ground=smoothstep(.5,.95,uv.y)*.95;
-  float gc=cloud(vec2(p.x*1.7+t*.035,p.y*3.6),t*.8);
+  float gc=cloud(vec2(abs(p.x-mouth.x)*1.7-t*.06,p.y*3.6),t*.8);
   dens+=ground*smoothstep(.3,.8,gc)*.9;
 
   // лёгкая дымка по всему кадру
   dens+=.07*cloud(p*1.4+vec2(0.,t*.02),t);
 
   float md=distance(p,mouth);
-  vec3 col=mix(vec3(.76,.87,.95),vec3(1.,.78,.55),exp(-md*5.5));
-  float a=clamp(dens*.55,0.,.8);
+  vec3 col=mix(vec3(.5,.76,1.),vec3(1.,.78,.55),.6*exp(-md*5.5));
+  float a=clamp(dens*.4,0.,.55);
   gl_FragColor=vec4(col*a,a); // premultiplied
 }
 `
