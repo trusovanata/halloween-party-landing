@@ -827,6 +827,38 @@ footer {
   container-type: size;
 }
 
+/* Дискотечные лучи (Magic UI Light Rays): ниже дыма (z 4), выше картинки. */
+.light-rays {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+}
+
+.light-rays__ray {
+  position: absolute;
+  top: -12%;
+  left: var(--ray-left);
+  width: var(--ray-width);
+  height: 90cqh;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--ray-color), transparent);
+  filter: blur(var(--rays-blur));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transform-origin: 50% 0;
+  margin-left: calc(var(--ray-width) / -2);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 767px) {
+  .light-rays {
+    --rays-blur: 12px;
+  }
+}
+
 .dance__smoke {
   position: absolute;
   z-index: 4;
