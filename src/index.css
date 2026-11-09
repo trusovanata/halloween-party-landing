@@ -430,7 +430,10 @@ a:focus-visible {
 
 .hero__title strong {
   color: #fffbfb;
-  font-size: clamp(58px, 17vw, 100px);
+  /* Одна строка: при 17vw "GONE DARK" (357px на 375) не влезал в
+     327px контейнера и переносился. 15vw — ~315px, влезает с запасом. */
+  white-space: nowrap;
+  font-size: clamp(40px, 15vw, 100px);
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: 0.05em;
@@ -1149,7 +1152,9 @@ footer {
   }
 
   .decks {
-    padding: 44px 0 96px;
+    /* Было 96px снизу — плюс тёмный градиент сверху у фото паука
+       давало ~100px пустой черноты между "Bass drops" и пауком. */
+    padding: 44px 0 20px;
     order: 6;
   }
 
