@@ -86,11 +86,9 @@ function Fade({ direction = "top" }: { direction?: "top" | "bottom" }) {
 function SplitLetters({
   text,
   delay = 0,
-  bounce = false,
 }: {
   text: string
   delay?: number
-  bounce?: boolean
 }) {
   const shouldReduceMotion = useReducedMotion()
   if (shouldReduceMotion) return <>{text}</>
@@ -111,27 +109,14 @@ function SplitLetters({
               return (
                 <motion.span
                   aria-hidden="true"
-                  initial={
-                    bounce
-                      ? { opacity: 0, y: 50 }
-                      : { opacity: 0, y: 60 }
-                  }
+                  initial={{ opacity: 0, y: 60 }}
                   key={`${char}-${charIndex}`}
                   style={{ display: "inline-block", marginRight: "-0.0145em" }}
-                  transition={
-                    bounce
-                      ? {
-                          type: "spring",
-                          stiffness: 260,
-                          damping: 20,
-                          delay: delay + i * 0.05,
-                        }
-                      : {
-                          duration: 0.7,
-                          ease: REVEAL_EASE,
-                          delay: delay + i * 0.06,
-                        }
-                  }
+                  transition={{
+                    duration: 0.7,
+                    ease: REVEAL_EASE,
+                    delay: delay + i * 0.06,
+                  }}
                   viewport={{ once: true, amount: 0.3 }}
                   whileInView={{ opacity: 1, y: 0 }}
                 >
@@ -635,7 +620,7 @@ export default function App() {
           <p>Then lose control</p>
         </div>
         <h2 className="dance__title">
-          <SplitLetters bounce text="Dance more" />
+          <SplitLetters text="Dance more" />
         </h2>
         <div className="dance__media">
           <img
