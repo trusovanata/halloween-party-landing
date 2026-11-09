@@ -224,6 +224,62 @@ export default function App() {
     }
   }, [])
 
+  // Режим для записи кейса: https://…/?demo — через 8 секунд страница сама
+  // плавно едет вниз, а на пауке (вспышка) и на «Dance more» (дым) делает
+  // паузу, чтобы эффекты успели сыграть. Обычным посетителям не мешает.
+  useEffect(() => {
+    if (!new URLSearchParams(window.location.search).has("demo")) return
+
+    let cancelled = false
+    const sleep = (ms: number) =>
+      new Promise<void>((resolve) => window.setTimeout(resolve, ms))
+    const ease = (p: number) =>
+      p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2
+    const scrollTo = (y: number, duration: number) =>
+      new Promise<void>((resolve) => {
+        const from = window.scrollY
+        const start = performance.now()
+        const step = (now: number) => {
+          if (cancelled) return resolve()
+          const p = Math.min(1, (now - start) / duration)
+          window.scrollTo(0, from + (y - from) * ease(p))
+          if (p < 1) requestAnimationFrame(step)
+          else resolve()
+        }
+        requestAnimationFrame(step)
+      })
+    const top = (selector: string, offset = 0) => {
+      const el = document.querySelector(selector)
+      return el
+        ? el.getBoundingClientRect().top + window.scrollY - offset
+        : window.scrollY
+    }
+
+    const run = async () => {
+      document.documentElement.style.scrollBehavior = "auto"
+      await sleep(8000)
+      const stops: [string, number, number, number][] = [
+        [".magic", 0, 3200, 800],
+        [".spider__media", 110, 3600, 4200],
+        [".dance__media", 110, 3600, 4200],
+        [".countdown", 120, 3000, 600],
+        [".venue", 100, 3000, 600],
+        [".rsvp", 120, 3000, 1200],
+      ]
+      for (const [selector, offset, duration, pause] of stops) {
+        if (cancelled) return
+        await scrollTo(top(selector, offset), duration)
+        await sleep(pause)
+      }
+      await scrollTo(document.documentElement.scrollHeight, 3000)
+    }
+    void run()
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
   const toggleSiteAudio = async () => {
     const audio = backgroundAudio.current
     if (!audio) return
