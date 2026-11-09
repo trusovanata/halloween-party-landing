@@ -2,6 +2,7 @@ import { FormEvent, useCallback, useEffect, useRef, useState } from "react"
 import {
   motion,
   useMotionValue,
+  useInView,
   useReducedMotion,
   useSpring,
 } from "motion/react"
@@ -135,6 +136,8 @@ function SplitLetters({
 export default function App() {
   const backgroundAudio = useRef<HTMLAudioElement>(null)
   const heroSection = useRef<HTMLElement>(null)
+  const spiderMedia = useRef<HTMLDivElement>(null)
+  const spiderInView = useInView(spiderMedia, { amount: 0.55, once: true })
   const pumpkinMotion = useRef<HTMLDivElement>(null)
   const pumpkinVideo = useRef<HTMLVideoElement>(null)
   const raveVideo = useRef<HTMLVideoElement>(null)
@@ -593,15 +596,74 @@ export default function App() {
       </section>
 
       <section className="spider" id="dress-code">
-        <div className="spider__media">
+        <div className="spider__media" ref={spiderMedia}>
           <img
             src={`${A}/d2eef.png`}
             alt="A giant spider silhouetted by orange light"
           />
           <Fade />
           <Fade direction="bottom" />
+          {!shouldReduceMotion && (
+            <>
+              <motion.div
+                animate={spiderInView ? { opacity: [0, 0.5, 0] } : undefined}
+                aria-hidden="true"
+                className="spider__flash-wash"
+                initial={{ opacity: 0 }}
+                transition={{ delay: 0.45, duration: 0.6, times: [0, 0.15, 1] }}
+              />
+              <div aria-hidden="true" className="spider__flash-layer">
+                <motion.span
+                  animate={
+                    spiderInView
+                      ? { opacity: [0, 1, 0], scale: [0.2, 1, 1.5] }
+                      : undefined
+                  }
+                  className="spider__flash"
+                  initial={{ opacity: 0, scale: 0.2 }}
+                  transition={{
+                    delay: 0.45,
+                    duration: 0.7,
+                    ease: "easeOut",
+                    times: [0, 0.18, 1],
+                  }}
+                />
+              </div>
+            </>
+          )}
         </div>
-        <img className="spider__small" src={`${A}/80a84.png`} alt="" />
+        <motion.img
+          alt=""
+          animate={
+            spiderInView
+              ? {
+                  filter: "brightness(1) saturate(1)",
+                  opacity: 1,
+                  scale: 1,
+                  y: 0,
+                }
+              : undefined
+          }
+          className="spider__small"
+          initial={
+            shouldReduceMotion
+              ? false
+              : {
+                  filter: "brightness(2.6) saturate(0.2)",
+                  opacity: 0,
+                  scale: 0.82,
+                  y: -24,
+                }
+          }
+          src={`${A}/80a84.png`}
+          style={{ rotate: 19.3 }}
+          transition={{
+            filter: { delay: 0.9, duration: 1.6 },
+            opacity: { delay: 0.85, duration: 0.35 },
+            scale: { delay: 0.85, duration: 0.7, ease: REVEAL_EASE },
+            y: { delay: 0.85, duration: 0.7, ease: REVEAL_EASE },
+          }}
+        />
         <div className="dress-copy">
           <p className="eyebrow">Dress code</p>
           <motion.h2 {...slideIn("left")}>Masks encouraged</motion.h2>

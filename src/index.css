@@ -707,6 +707,51 @@ footer {
   height: 430px;
 }
 
+/* Вспышка камеры у паука. Слой повторяет геометрию object-fit:cover
+   картинки 1344x768 (ширина = max(контейнер, высота*1344/768), центр по
+   центру), поэтому процентные координаты — это координаты самого фото:
+   камера в исходнике на (36.2%, 24.3%). */
+.spider__media {
+  container-type: size;
+}
+
+.spider__flash-layer {
+  position: absolute;
+  z-index: 6;
+  top: 50%;
+  left: 50%;
+  width: max(100%, calc(100cqh * 1344 / 768));
+  aspect-ratio: 1344 / 768;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.spider__flash {
+  position: absolute;
+  top: 24.3%;
+  left: 36.2%;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #fff 0%,
+    rgba(255, 246, 225, 0.95) 14%,
+    rgba(255, 208, 140, 0.45) 40%,
+    rgba(255, 180, 90, 0) 70%
+  );
+  pointer-events: none;
+  translate: -50% -50%;
+}
+
+.spider__flash-wash {
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  background: #fff4e1;
+  pointer-events: none;
+}
+
 .spider__media > img,
 .dance__media > img {
   display: block;
@@ -749,7 +794,6 @@ footer {
   height: auto;
   max-width: min(55vw, 330px);
   max-height: 160px;
-  transform: rotate(19.3deg);
   /* Полароид: кремовая рамка, нижний край толще, мягкая тень. */
   box-sizing: border-box;
   padding: 7px 7px 26px;
@@ -1716,6 +1760,11 @@ footer {
 
   .spider__media {
     height: 58.021vw;
+  }
+
+  .spider__flash-layer {
+    /* Картинка на десктопе перевёрнута по вертикали — слой тоже. */
+    transform: translate(-50%, -50%) scaleY(-1);
   }
 
   .spider__media > img {
