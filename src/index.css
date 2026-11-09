@@ -1260,8 +1260,9 @@ footer {
   }
 
   .header {
-    width: calc(100% - 96px);
-    margin: 0 48px;
+    width: 100%;
+    margin: 0;
+    padding: 0 48px;
   }
 
   .header nav {
@@ -1425,7 +1426,7 @@ footer {
   }
 
   .header {
-    width: var(--content);
+    width: 100%;
     height: 5.677vw;
     margin: 0;
     /* Шапка — fixed, позиционируется от вьюпорта, а не от .site-shell.
@@ -1434,7 +1435,7 @@ footer {
        левому краю физического экрана. Эта формула держит тот же отступ
        --side, но от края виртуальной страницы 1920, а не от края
        реального, более широкого окна. */
-    left: calc(max(0px, (100vw - 1920px) / 2) + var(--side));
+    padding: 0 calc(max(0px, (100vw - 1920px) / 2) + var(--side));
   }
 
   .site-shell {
