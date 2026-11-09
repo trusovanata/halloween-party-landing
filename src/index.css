@@ -1528,15 +1528,16 @@ footer {
   .hero__glow {
     position: absolute;
     z-index: -1;
-    top: 6vw;
-    right: -6vw;
+    top: -6vw;
+    right: -24vw;
     display: block;
-    width: 58vw;
-    height: 44vw;
+    width: 104vw;
+    height: 76vw;
     background: radial-gradient(
       ellipse 50% 50% at 50% 50%,
-      rgba(6, 135, 175, 0.62) 0%,
-      rgba(38, 72, 84, 0.14) 58%,
+      rgba(6, 135, 175, 0.5) 0%,
+      rgba(14, 108, 140, 0.26) 30%,
+      rgba(30, 80, 100, 0.1) 62%,
       rgba(41, 21, 11, 0) 100%
     );
     pointer-events: none;
