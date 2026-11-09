@@ -1,5 +1,8 @@
 {
   "title": "Julia's Halloween Birthday · Oct 31 · Odesa",
   "description": "Julia's Halloween birthday party: October 31, 17:00 at Lesok Café, Odesa. Dress to kill, dance more, claim your seat.",
-  "language": "en"
+  "language": "en",
+  "openGraph": {
+    "image": "https://halloween-party-landing.pages.dev/og-image.jpg"
+  }
 }
