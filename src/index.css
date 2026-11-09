@@ -734,7 +734,10 @@ footer {
 
 .spider__small {
   position: absolute;
-  z-index: 3;
+  /* Выше .ambient-glows (6): свечение с mix-blend screen иначе лежит
+     пятном поверх полароида. Только сам полароид — основное фото паука
+     остаётся под свечением, иначе у его низа появляется шов. */
+  z-index: 7;
   top: 20px;
   right: -30px;
   /* .spider__media — фиксированные 570px высоты, а top здесь — тоже
