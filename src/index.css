@@ -29,13 +29,6 @@
 }
 
 @font-face {
-  font-family: "Kulim Park:SemiBold";
-  src: url("https://static.figma.com/font/KulimPark-SemiBold_1") format("woff2");
-  font-style: normal;
-  font-weight: 600;
-}
-
-@font-face {
   font-family: "TypoGraphica:Regular";
   /* Первым — маленький набор букв, встроенный прямо в CSS (A–Z, цифры,
      знаки): заголовки не зависят от сети и расширений браузера. Полный
@@ -1423,7 +1416,7 @@ footer {
 footer {
   height: 250px;
   padding: 76px 24px;
-  font-family: "Kulim Park:SemiBold", sans-serif;
+  font-family: "JetBrains Mono:Regular", monospace;
   font-size: 19px;
   line-height: 1.45;
   letter-spacing: 0.02em;
