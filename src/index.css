@@ -2251,11 +2251,13 @@ footer {
     line-height: 7.083vw;
   }
 
+  /* Кружок не должен заходить на рамку формы / «Your seat is claimed»:
+     нижний край кружка выше верха формы. */
   .rsvp__badge {
     position: absolute;
-    top: 6.823vw;
+    top: 5.4vw;
     right: 0;
-    width: 21.458vw;
+    width: 17.2vw;
     margin: 0;
   }
 
