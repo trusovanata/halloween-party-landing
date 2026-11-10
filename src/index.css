@@ -835,6 +835,9 @@ footer {
 }
 
 .lasers__beam {
+  --a: var(--da);
+  --x: var(--dx);
+  --op: 0.55;
   position: absolute;
   left: var(--x);
   bottom: 23.5%;
@@ -873,7 +876,7 @@ footer {
 @keyframes laser-blink {
   0%,
   70% {
-    opacity: 0.55;
+    opacity: var(--op);
   }
 
   75% {
@@ -882,13 +885,20 @@ footer {
 
   80%,
   100% {
-    opacity: 0.55;
+    opacity: var(--op);
   }
 }
 
 @media (max-width: 767px) {
   .lasers__beam {
+    --a: var(--ma);
+    --x: var(--mx);
+    bottom: var(--mb); /* растут из-за плеч ведьм, правые выше шляпы */
+    height: 42cqh;
     width: 2px;
+    margin-left: -1px;
+    --op: 0.75;
+    opacity: 0.75;
     box-shadow: 0 0 6px 1px var(--c), 0 0 16px 3px var(--c);
   }
 }
